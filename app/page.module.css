@@ -1,0 +1,363 @@
+/* ─── Layout ────────────────────────────────────────────────────────────── */
+
+.main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2.5rem 1rem 4rem;
+  min-height: 100dvh;
+}
+
+/* ─── Header ─────────────────────────────────────────────────────────────── */
+
+.header {
+  text-align: center;
+  margin-bottom: 2rem;
+  max-width: 480px;
+  width: 100%;
+}
+
+.ornamentTop {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+  opacity: 0.55;
+}
+
+.title {
+  font-size: clamp(2rem, 6vw, 2.8rem);
+  font-weight: 500;
+  color: var(--ink);
+  letter-spacing: 0.02em;
+  line-height: 1.1;
+}
+
+.subtitle {
+  font-size: 0.92rem;
+  color: var(--muted);
+  margin-top: 0.5rem;
+  font-weight: 300;
+  letter-spacing: 0.04em;
+}
+
+/* ─── Card ───────────────────────────────────────────────────────────────── */
+
+.card {
+  background: var(--white);
+  border: 0.5px solid var(--border);
+  border-radius: 16px;
+  padding: 2rem;
+  width: 100%;
+  max-width: 480px;
+}
+
+/* ─── Badge ──────────────────────────────────────────────────────────────── */
+
+.badge {
+  display: inline-block;
+  background: #f0e8e0;
+  color: #9a7040;
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.3rem 0.75rem;
+  border-radius: 20px;
+  font-weight: 500;
+  margin-bottom: 1.25rem;
+}
+
+/* ─── Form fields ─────────────────────────────────────────────────────────── */
+
+.field {
+  margin-bottom: 1.25rem;
+}
+
+.label {
+  display: block;
+  font-size: 0.78rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 0.45rem;
+  font-weight: 500;
+}
+
+.input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 0.5px solid #e0d4c8;
+  border-radius: 8px;
+  font-family: 'Jost', sans-serif;
+  font-size: 1rem;
+  color: var(--ink);
+  background: #fdfaf7;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.input:focus {
+  border-color: var(--gold);
+}
+
+/* ─── Dropzone ───────────────────────────────────────────────────────────── */
+
+.dropzone {
+  border: 1.5px dashed #d4bfb0;
+  border-radius: 12px;
+  padding: 2rem 1.5rem;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s;
+  background: #fdfaf7;
+}
+
+.dropzone:hover,
+.dropping {
+  border-color: var(--rose);
+  background: #fdf5f3;
+}
+
+.dropIcon {
+  font-size: 2rem;
+  margin-bottom: 0.75rem;
+  opacity: 0.5;
+}
+
+.dropText {
+  font-size: 0.9rem;
+  color: #9a8070;
+  font-weight: 300;
+}
+
+.dropHint {
+  font-size: 0.78rem;
+  color: #b8a090;
+  display: block;
+  margin-top: 0.3rem;
+}
+
+/* ─── Preview ────────────────────────────────────────────────────────────── */
+
+.previewWrap {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #f5ede8;
+}
+
+.previewImg {
+  width: 100%;
+  max-height: 300px;
+  object-fit: cover;
+  display: block;
+}
+
+.clearBtn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: rgba(255, 255, 255, 0.9);
+  border: none;
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #8a6060;
+  transition: background 0.15s;
+}
+
+.clearBtn:hover {
+  background: #fff;
+}
+
+/* ─── Buttons ─────────────────────────────────────────────────────────────── */
+
+.btn {
+  width: 100%;
+  padding: 0.85rem;
+  border: none;
+  border-radius: 10px;
+  font-family: 'Jost', sans-serif;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  letter-spacing: 0.04em;
+  transition: all 0.2s;
+  margin-top: 1rem;
+}
+
+.btnPrimary {
+  background: var(--rose);
+  color: #fff;
+}
+
+.btnPrimary:hover:not(:disabled) {
+  background: var(--rose-dk);
+}
+
+.btnPrimary:disabled {
+  background: #d4b0b0;
+  cursor: not-allowed;
+}
+
+.btnGhost {
+  background: transparent;
+  color: var(--rose);
+  border: 0.5px solid #d4b0b0;
+}
+
+.btnGhost:hover {
+  background: #fdf5f3;
+}
+
+/* ─── Checking ───────────────────────────────────────────────────────────── */
+
+.checking {
+  text-align: center;
+  padding: 1.5rem 0;
+}
+
+.spinner {
+  width: 48px;
+  height: 48px;
+  border: 2px solid #f0e4d8;
+  border-top: 2px solid var(--rose);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 1.5rem;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.checkingTitle {
+  font-size: 1.7rem;
+  color: var(--ink);
+  margin-bottom: 0.5rem;
+}
+
+.checkingText {
+  color: var(--muted);
+  font-size: 0.9rem;
+  font-weight: 300;
+  line-height: 1.7;
+}
+
+/* ─── Result OK ──────────────────────────────────────────────────────────── */
+
+.resultOk,
+.resultConflict {
+  text-align: center;
+}
+
+.bigIcon {
+  font-size: 3rem;
+  margin-bottom: 0.75rem;
+}
+
+.resultTitle {
+  font-size: 1.8rem;
+  color: var(--ink);
+  margin-bottom: 0.5rem;
+}
+
+.divider {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin: 1rem 0;
+  color: var(--gold);
+}
+
+.divider::before,
+.divider::after {
+  content: '';
+  flex: 1;
+  height: 0.5px;
+  background: linear-gradient(to right, transparent, #d4b090);
+}
+
+.divider::after {
+  background: linear-gradient(to left, transparent, #d4b090);
+}
+
+.resultText {
+  color: var(--muted);
+  font-size: 0.92rem;
+  font-weight: 300;
+  line-height: 1.7;
+}
+
+.registeredImgWrap {
+  border-radius: 12px;
+  overflow: hidden;
+  margin-top: 1.25rem;
+}
+
+.registeredImg {
+  width: 100%;
+  max-height: 260px;
+  object-fit: cover;
+  display: block;
+}
+
+/* ─── Result Conflict ────────────────────────────────────────────────────── */
+
+.conflictGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin: 1.25rem 0;
+}
+
+.conflictImgBox {
+  text-align: center;
+}
+
+.conflictImg {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+  border-radius: 10px;
+  display: block;
+}
+
+.conflictLabel {
+  font-size: 0.75rem;
+  color: #9a8070;
+  display: block;
+  margin-top: 0.4rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.conflictMsg {
+  background: #fdf5f3;
+  border: 0.5px solid #e8d0c8;
+  border-radius: 10px;
+  padding: 1rem 1.25rem;
+  font-size: 0.9rem;
+  color: #7a5050;
+  line-height: 1.7;
+}
+
+/* ─── Footer ──────────────────────────────────────────────────────────────── */
+
+.footer {
+  margin-top: 3rem;
+  text-align: center;
+  font-size: 0.78rem;
+  color: #b8a090;
+  letter-spacing: 0.06em;
+}
+
+/* ─── Responsive ─────────────────────────────────────────────────────────── */
+
+@media (max-width: 520px) {
+  .card { padding: 1.5rem; }
+  .conflictImg { height: 120px; }
+}

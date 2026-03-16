@@ -1,0 +1,31 @@
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --rose:    #b87e7e;
+  --rose-dk: #a46868;
+  --rose-lt: #f5ede8;
+  --gold:    #c9a070;
+  --cream:   #faf7f2;
+  --ink:     #2e2320;
+  --muted:   #8a7060;
+  --border:  #e8ddd5;
+  --white:   #ffffff;
+}
+
+html { font-size: 16px; }
+
+body {
+  font-family: 'Jost', sans-serif;
+  background: var(--cream);
+  color: var(--ink);
+  min-height: 100dvh;
+}
+
+h1, h2, h3 {
+  font-family: 'Cormorant Garamond', serif;
+}
+
+/* Scrollbar sutil */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
