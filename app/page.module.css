@@ -24,17 +24,28 @@
 }
 
 .title {
-  font-size: clamp(2rem, 6vw, 2.8rem);
+  font-size: clamp(2.2rem, 8vw, 3.2rem);
   font-weight: 500;
   color: var(--ink);
   letter-spacing: 0.02em;
   line-height: 1.1;
+  font-style: italic;
+}
+
+.tagline {
+  font-size: clamp(1rem, 3vw, 1.2rem);
+  color: var(--rose);
+  margin-top: 0.75rem;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-family: 'Jost', sans-serif;
 }
 
 .subtitle {
-  font-size: 0.92rem;
+  font-size: 0.88rem;
   color: var(--muted);
-  margin-top: 0.5rem;
+  margin-top: 0.3rem;
   font-weight: 300;
   letter-spacing: 0.04em;
 }
@@ -171,6 +182,83 @@
 
 .clearBtn:hover {
   background: #fff;
+}
+
+/* ─── Expand hint ─────────────────────────────────────────────────────────── */
+
+.expandHint {
+  text-align: center;
+  font-size: 0.72rem;
+  color: var(--muted);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 0.4rem 0 0.1rem;
+  opacity: 0.7;
+}
+
+.clickable {
+  cursor: zoom-in;
+  transition: opacity 0.15s;
+}
+
+.clickable:hover {
+  opacity: 0.9;
+}
+
+/* ─── Lightbox ────────────────────────────────────────────────────────────── */
+
+.lightboxOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(20, 12, 10, 0.88);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 1.5rem;
+  animation: fadeIn 0.22s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.lightboxImg {
+  max-width: 100%;
+  max-height: 90dvh;
+  object-fit: contain;
+  border-radius: 10px;
+  animation: zoomIn 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.5);
+}
+
+@keyframes zoomIn {
+  from { transform: scale(0.85); opacity: 0; }
+  to   { transform: scale(1);    opacity: 1; }
+}
+
+.lightboxClose {
+  position: fixed;
+  top: 1.25rem;
+  right: 1.25rem;
+  background: rgba(255, 255, 255, 0.15);
+  border: 0.5px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background 0.15s;
+  z-index: 1001;
+}
+
+.lightboxClose:hover {
+  background: rgba(255, 255, 255, 0.28);
 }
 
 /* ─── Buttons ─────────────────────────────────────────────────────────────── */

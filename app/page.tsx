@@ -47,16 +47,27 @@ export default function Home() {
   const [isDragging, setIsDragging] = useState(false);
   const [conflict, setConflict] = useState<ConflictInfo | null>(null);
   const [registeredUrl, setRegisteredUrl] = useState<string | null>(null);
-  const [weddingLabel, setWeddingLabel] = useState("la Boda");
+  const [coupleNames, setCoupleNames] = useState<string | null>(null);
+  const [lightboxSrc, setLightboxSrc] = useState<string | null>(null);
   const fileRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     const wid = getWeddingId();
     if (wid !== "default") {
-      // Capitalizar y formatear el slug como nombre
-      const label = wid.replace(/-/g, " & ").replace(/\b\w/g, (c) => c.toUpperCase());
-      setWeddingLabel(`la Boda de ${label}`);
+      // "sofi-nico" → "Sofi & Nico"
+      const names = wid
+        .split("-")
+        .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+        .join(" & ");
+      setCoupleNames(names);
     }
+  }, []);
+
+  // Cerrar lightbox con Escape
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") setLightboxSrc(null); };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
   }, []);
 
   const handleFile = (f: File) => {
@@ -120,11 +131,27 @@ export default function Home() {
       {/* ── Header ── */}
       <header className={styles.header}>
         <div className={styles.ornamentTop}>✿</div>
-        <h1 className={styles.title}>
-          Registro de Vestidos
-        </h1>
-        <p className={styles.subtitle}>{weddingLabel} · Asegurate tu look único</p>
+        {coupleNames ? (
+          <h1 className={styles.title}>{coupleNames}</h1>
+        ) : (
+          <h1 className={styles.title}>Bienvenida</h1>
+        )}
+        <p className={styles.tagline}>Registrá tu vestido</p>
+        <p className={styles.subtitle}>Asegurate tu look único · Nadie llega igual</p>
       </header>
+
+      {/* ── Lightbox ── */}
+      {lightboxSrc && (
+        <div className={styles.lightboxOverlay} onClick={() => setLightboxSrc(null)}>
+          <button className={styles.lightboxClose} onClick={() => setLightboxSrc(null)}>✕</button>
+          <img
+            src={lightboxSrc}
+            alt="Vestido ampliado"
+            className={styles.lightboxImg}
+            onClick={(e) => e.stopPropagation()}
+          />
+        </div>
+      )}
 
       {/* ── Form step ── */}
       {step === "form" && (
@@ -165,9 +192,9 @@ export default function Home() {
               </div>
             ) : (
               <div className={styles.previewWrap}>
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={preview} alt="Vista previa" className={styles.previewImg} />
+                <img src={preview} alt="Vista previa" className={`${styles.previewImg} ${styles.clickable}`} onClick={() => setLightboxSrc(preview)} title="Clic para ampliar" />
                 <button className={styles.clearBtn} onClick={clearFile} aria-label="Quitar foto">✕</button>
+                <div className={styles.expandHint}>toca para ampliar</div>
               </div>
             )}
             <input
@@ -215,8 +242,8 @@ export default function Home() {
             </p>
             {registeredUrl && (
               <div className={styles.registeredImgWrap}>
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={registeredUrl} alt="Tu vestido registrado" className={styles.registeredImg} />
+                <img src={registeredUrl} alt="Tu vestido registrado" className={`${styles.registeredImg} ${styles.clickable}`} onClick={() => setLightboxSrc(registeredUrl)} title="Clic para ampliar" />
+                <div className={styles.expandHint}>toca para ampliar</div>
               </div>
             )}
             <button className={`${styles.btn} ${styles.btnGhost}`} onClick={reset}>
@@ -237,14 +264,12 @@ export default function Home() {
             <div className={styles.conflictGrid}>
               <div className={styles.conflictImgBox}>
                 {preview && (
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img src={preview} alt="Tu vestido" className={styles.conflictImg} />
+                  <img src={preview} alt="Tu vestido" className={`${styles.conflictImg} ${styles.clickable}`} onClick={() => setLightboxSrc(preview)} title="Clic para ampliar" />
                 )}
                 <span className={styles.conflictLabel}>Tu vestido</span>
               </div>
               <div className={styles.conflictImgBox}>
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={conflict.imageUrl} alt="Vestido ya registrado" className={styles.conflictImg} />
+                <img src={conflict.imageUrl} alt="Vestido ya registrado" className={`${styles.conflictImg} ${styles.clickable}`} onClick={() => setLightboxSrc(conflict.imageUrl)} title="Clic para ampliar" />
                 <span className={styles.conflictLabel}>{conflict.guestName}</span>
               </div>
             </div>
