@@ -363,20 +363,34 @@ export default function AdminPage() {
                         className={styles.invitationDrop}
                         onClick={() => invitationRef.current?.click()}
                       >
-                        {invitationPreview ? (
+                        {invitationFile?.type === "application/pdf" ? (
+                          <div className={styles.invitationDropEmpty}>
+                            <p className={styles.invitationDropText}>PDF cargado · tocá para cambiar</p>
+                            <small>{invitationFile.name}</small>
+                          </div>
+                        ) : invitationPreview && !invitationPreview.endsWith(".pdf") ? (
                           <img src={invitationPreview} alt="Invitación" className={styles.invitationPreview} />
+                        ) : invitationPreview?.endsWith(".pdf") ? (
+                          <div className={styles.invitationDropEmpty}>
+                            <p className={styles.invitationDropText}>Invitación PDF guardada</p>
+                            <small>Tocá para reemplazar</small>
+                          </div>
                         ) : (
                           <div className={styles.invitationDropEmpty}>
-                            <p className={styles.invitationDropText}>Subí la foto de tu invitación</p>
-                            <small>JPG, PNG o WEBP</small>
+                            <p className={styles.invitationDropText}>Subí tu invitación</p>
+                            <small>JPG, PNG, WEBP o PDF</small>
                           </div>
                         )}
                       </div>
-                      <input ref={invitationRef} type="file" accept="image/*" style={{ display: "none" }} onChange={(e) => {
+                      <input ref={invitationRef} type="file" accept="image/*,.pdf,application/pdf" style={{ display: "none" }} onChange={(e) => {
                         const f = e.target.files?.[0];
                         if (f) {
                           setInvitationFile(f);
-                          setInvitationPreview(URL.createObjectURL(f));
+                          if (f.type !== "application/pdf") {
+                            setInvitationPreview(URL.createObjectURL(f));
+                          } else {
+                            setInvitationPreview(null);
+                          }
                         }
                       }} />
 
