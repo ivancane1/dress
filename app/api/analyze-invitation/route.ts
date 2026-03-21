@@ -96,19 +96,21 @@ export async function POST(req: NextRequest) {
 
     // Analizar con Claude Vision
     const base64 = buffer.toString("base64");
-    const mimeType = imageFile.type as "image/jpeg" | "image/png" | "image/webp";
+const mimeType = imageFile.type;
+const isPdf = mimeType === "application/pdf";
 
-    const response = await anthropic.messages.create({
-      model: "claude-opus-4-5",
-      max_tokens: 400,
-      messages: [
-        {
-          role: "user",
-          content: [
-            {
-              type: "image",
-              source: { type: "base64", media_type: mimeType, data: base64 },
-            },
+const mediaContent = isPdf
+  ? { type: "document" as const, source: { type: "base64" as const, media_type: "application/pdf" as const, data: base64 } }
+  : { type: "image" as const, source: { type: "base64" as const, media_type: mimeType as "image/jpeg" | "image/png" | "image/webp", data: base64 } };
+
+const response = await anthropic.messages.create({
+  model: "claude-opus-4-5",
+  max_tokens: 400,
+  messages: [
+    {
+      role: "user",
+      content: [
+        mediaContent,
             {
               type: "text",
               text: `Analizá esta invitación de casamiento y extraé su identidad visual.
