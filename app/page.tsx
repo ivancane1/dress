@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import styles from "./page.module.css";
+import type { Theme } from "@/app/api/analyze-invitation/route";
 
 type Step = "form" | "checking" | "ok" | "conflict";
 
@@ -16,6 +17,7 @@ interface WeddingConfig {
   text_tagline: string;
   text_subtitle: string;
   text_footer: string;
+  theme_json: Theme | null;
 }
 
 function getWeddingId(): string {
@@ -57,12 +59,46 @@ async function compressImage(file: File, maxPx = 800): Promise<string> {
   });
 }
 
+function applyTheme(theme: Theme) {
+  const root = document.documentElement;
+  root.style.setProperty("--t-bg", theme.bg_color);
+  root.style.setProperty("--t-card", theme.card_color);
+  root.style.setProperty("--t-primary", theme.primary_color);
+  root.style.setProperty("--t-accent", theme.accent_color);
+  root.style.setProperty("--t-text", theme.text_color);
+  root.style.setProperty("--t-muted", theme.muted_color);
+  root.style.setProperty("--t-border", theme.border_color);
+
+  // Cargar Google Font si no es la default
+  if (theme.google_font && theme.google_font !== "Cormorant Garamond" && theme.google_font !== "Jost") {
+    const fontName = theme.google_font.replace(/ /g, "+");
+    const linkId = "dynamic-font";
+    if (!document.getElementById(linkId)) {
+      const link = document.createElement("link");
+      link.id = linkId;
+      link.rel = "stylesheet";
+      link.href = `https://fonts.googleapis.com/css2?family=${fontName}:ital,wght@0,400;0,500;1,400&display=swap`;
+      document.head.appendChild(link);
+    }
+    root.style.setProperty("--t-font-heading", `'${theme.google_font}', serif`);
+  } else {
+    root.style.setProperty("--t-font-heading", theme.font_style === "sans" ? "'Jost', sans-serif" : "'Cormorant Garamond', serif");
+  }
+}
+
+function resetTheme() {
+  const root = document.documentElement;
+  ["--t-bg","--t-card","--t-primary","--t-accent","--t-text","--t-muted","--t-border","--t-font-heading"]
+    .forEach((v) => root.style.removeProperty(v));
+}
+
 const DEFAULT_CONFIG: WeddingConfig = {
   id: "default",
   display_name: "",
   text_tagline: "Registrá tu vestido, y asegurate que tu look sea único",
   text_subtitle: "",
   text_footer: "Dress-up",
+  theme_json: null,
 };
 
 export default function Home() {
@@ -81,7 +117,14 @@ export default function Home() {
     const wid = getWeddingId();
     fetch(`/api/wedding?boda=${encodeURIComponent(wid)}`)
       .then((r) => r.json())
-      .then((data: WeddingConfig) => setConfig(data))
+      .then((data: WeddingConfig) => {
+        setConfig(data);
+        if (data.theme_json) {
+          applyTheme(data.theme_json);
+        } else {
+          resetTheme();
+        }
+      })
       .catch(() => {});
   }, []);
 
@@ -215,7 +258,7 @@ export default function Home() {
             <p className={styles.resultText}>Tu look es único. Nadie más eligió un vestido igual.<br />¡Te va a ver espléndida!</p>
             {registeredUrl && (
               <div className={styles.registeredImgWrap}>
-                <img src={registeredUrl} alt="Tu vestido registrado" className={`${styles.registeredImg} ${styles.clickable}`} onClick={() => setLightboxSrc(registeredUrl)} />
+                <img src={registeredUrl} alt="Tu vestido registrado" className={`${styles.registeredImg} ${styles.clickable}`} onClick={() => setLightboxSrc(registeredUrl!)} />
                 <div className={styles.expandHint}>toca para ampliar</div>
               </div>
             )}

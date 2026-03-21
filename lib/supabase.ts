@@ -20,6 +20,8 @@ export type Wedding = {
   text_tagline: string;
   text_subtitle: string;
   text_footer: string;
+  invitation_url: string | null;
+  theme_json: import("@/app/api/analyze-invitation/route").Theme | null;
   created_at: string;
   updated_at: string;
 };

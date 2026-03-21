@@ -215,3 +215,53 @@
   .content { padding: 1.25rem; }
   .formGrid { grid-template-columns: 1fr; }
 }
+
+/* ─── Design tab ──────────────────────────────────────────────────────────── */
+.designSection { display: flex; flex-direction: column; gap: 1.25rem; }
+
+.designOptions { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; }
+
+.designOption {
+  background: var(--white); border: 0.5px solid var(--border);
+  border-radius: 12px; padding: 1.25rem;
+  display: flex; flex-direction: column; gap: 1rem;
+  transition: border-color 0.2s;
+}
+.designOptionActive { border-color: var(--rose) !important; border-width: 1.5px !important; }
+
+.designOptionHeader { display: flex; align-items: flex-start; justify-content: space-between; gap: 0.75rem; }
+.designOptionTitle { font-size: 0.95rem; font-weight: 500; color: var(--ink); }
+.designOptionDesc { font-size: 0.78rem; color: var(--muted); margin-top: 0.15rem; }
+
+.activeBadge {
+  background: #f5ede8; color: var(--rose); font-size: 0.7rem;
+  padding: 0.2rem 0.6rem; border-radius: 20px; font-weight: 500;
+  white-space: nowrap; letter-spacing: 0.04em;
+}
+
+.themeSwatches { display: flex; align-items: center; gap: 0.4rem; }
+.swatch { width: 22px; height: 22px; border-radius: 50%; border: 0.5px solid rgba(0,0,0,0.1); flex-shrink: 0; }
+.swatchLabel { font-size: 0.75rem; color: var(--muted); margin-left: 0.25rem; }
+
+.invitationDrop {
+  border: 1.5px dashed #d4bfb0; border-radius: 10px;
+  overflow: hidden; cursor: pointer; transition: border-color 0.2s;
+  min-height: 120px; display: flex; align-items: center; justify-content: center;
+}
+.invitationDrop:hover { border-color: var(--rose); }
+.invitationPreview { width: 100%; max-height: 200px; object-fit: cover; display: block; }
+.invitationDropEmpty { text-align: center; padding: 1.5rem; }
+.invitationDropText { font-size: 0.88rem; color: var(--muted); font-weight: 300; }
+.invitationDropEmpty small { font-size: 0.75rem; color: #b8a090; display: block; margin-top: 0.2rem; }
+
+.themeResult { display: flex; flex-direction: column; gap: 0.75rem; }
+.themeResultLabel { font-size: 0.75rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+
+.themePagePreview {
+  border-radius: 10px; padding: 1rem 1.25rem; text-align: center;
+  transition: all 0.4s;
+}
+
+@media (max-width: 900px) {
+  .designOptions { grid-template-columns: 1fr; }
+}
