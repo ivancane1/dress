@@ -10,6 +10,15 @@
   --muted:   #8a7060;
   --border:  #e8ddd5;
   --white:   #ffffff;
+
+  --t-bg:           #faf7f2;
+  --t-card:         #ffffff;
+  --t-primary:      #b87e7e;
+  --t-accent:       #c9a070;
+  --t-text:         #2e2320;
+  --t-muted:        #8a7060;
+  --t-border:       #e8ddd5;
+  --t-font-heading: 'Cormorant Garamond', serif;
 }
 
 html { font-size: 16px; }
@@ -21,11 +30,6 @@ body {
   min-height: 100dvh;
 }
 
-h1, h2, h3 {
-  font-family: 'Cormorant Garamond', serif;
-}
-
-/* Scrollbar sutil */
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
