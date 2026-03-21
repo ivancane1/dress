@@ -76,7 +76,7 @@ export async function POST(req: NextRequest) {
     // Subir imagen a Supabase Storage
     const arrayBuffer = await imageFile.arrayBuffer();
     const buffer = Buffer.from(arrayBuffer);
-    const ext = imageFile.type === "image/png" ? "png" : "jpg";
+    const ext = imageFile.type === "application/pdf" ? "pdf" : imageFile.type === "image/png" ? "png" : "jpg";
     const fileName = `invitations/${weddingId}.${ext}`;
 
     const { error: uploadError } = await supabaseAdmin.storage
